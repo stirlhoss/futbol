@@ -1,0 +1,20 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/cadenjarrett/project_work/mod1_projects/futbol/lib/stat_tracker.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      }
+    },
+    "timestamp": 1649730234
+  }
+}
