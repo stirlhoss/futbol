@@ -1,9 +1,9 @@
 require 'rspec'
 require 'simplecov'
-require './lib/season'
+require './lib/stat_tracker'
 
 
-describe Season do
+describe StatTracker do
   before :each do
     game_path = './test_data/games.csv'
     team_path = './test_data/teams.csv'
@@ -40,5 +40,5 @@ describe Season do
 
   xit "can name team with fewest tackles" do
     expect(@stat_tracker.fewest_tackles).to eq()
-  end  
+  end
 end
