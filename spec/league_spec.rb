@@ -17,7 +17,7 @@ describe StatTracker do
     @stat_tracker = StatTracker.from_csv(locations)
   end
   it "counts teams" do
-    expect(@stat_tracker.count_of_teams).to eq(33)
+    expect(@stat_tracker.count_of_teams).to eq(32)
   end
 
   it "gets team with best offense" do

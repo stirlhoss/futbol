@@ -49,9 +49,11 @@ class StatTracker
   # -----league statistics-------
 
   def count_of_teams
+   @stats[1].count
   end
 
   def best_offense
+    binding.pry
   end
 
   def worst_offense
