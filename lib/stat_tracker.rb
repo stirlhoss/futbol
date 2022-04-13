@@ -2,7 +2,7 @@ require 'pry'
 require 'csv'
 
 class StatTracker
-
+  attr_reader :stats
   def initialize(stats)
     @stats = stats
   end
@@ -72,21 +72,67 @@ class StatTracker
   # -----season statistics-------
 
   def winningest_coach
+    coach_win_hash = Hash.new(0)
+    coach_total_hash = Hash.new(0)
+    @stats[2].each do |row|
+      coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN"
+      coach_total_hash[row[:head_coach]] += 1
+    end
+    wphash = coach_win_hash.map {|key,value|[key, value.to_f / coach_total_hash[key].to_f]}
+    wphash.max_by{|coach,percent| percent}[0]
   end
 
   def worst_coach
+    coach_win_hash = Hash.new(0)
+    coach_total_hash = Hash.new(0)
+    @stats[2].each do |row|
+      coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN"
+      coach_total_hash[row[:head_coach]] += 1
+    end
+    wphash = coach_win_hash.map {|key,value|[key, value.to_f / coach_total_hash[key].to_f]}
+    wphash.min_by{|coach,percent| percent}[0]
   end
 
   def most_accurate_team
+    shots_hash = Hash.new(0)
+    goal_hash = Hash.new(0)
+    @stats[2].each do |row|
+      shots_hash[row[:team_id]] += row[:shots].to_i
+      goal_hash[row[:team_id]] += row[:goals].to_i
+    end
+    ratio_hash = shots_hash.map {|key,value|[key, goal_hash[key].to_f / value.to_f]}
+    team_id = ratio_hash.max_by{|id,percent| percent}[0]
+    @stats[1].find {|row| row[:team_id] == team_id}[:teamname]
   end
 
   def least_accurate_team
+    shots_hash = Hash.new(0)
+    goal_hash = Hash.new(0)
+    @stats[2].each do |row|
+      shots_hash[row[:team_id]] += row[:shots].to_i
+      goal_hash[row[:team_id]] += row[:goals].to_i
+    end
+    ratio_hash = shots_hash.map {|key,value|[key, goal_hash[key].to_f / value.to_f]}
+    team_id = ratio_hash.min_by{|id,percent| percent}[0]
+    @stats[1].find {|row| row[:team_id] == team_id}[:teamname]
   end
 
   def most_tackles
+    tackles_hash = Hash.new(0)
+    @stats[2].each do |row|
+      tackles_hash[row[:team_id]] += row[:tackles].to_i
+    end
+    team_id = tackles_hash.max_by{|id,tackles| tackles}[0]
+    @stats[1].find {|row| row[:team_id] == team_id}[:teamname]
   end
 
   def fewest_tackles
+    tackles_hash = Hash.new(0)
+    @stats[2].each do |row|
+      tackles_hash[row[:team_id]] += row[:tackles].to_i
+    end
+    team_id = tackles_hash.min_by{|id,tackles| tackles}[0]
+    @stats[1].find {|row| row[:team_id] == team_id}[:teamname]
   end
 
   # -----team statistics-------
