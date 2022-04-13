@@ -94,7 +94,7 @@ class StatTracker
   def team_info(team_id)
   end
 
-  def best_season
+  def best_season(team_id)
   end
 
   def worst_season
