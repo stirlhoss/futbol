@@ -53,7 +53,12 @@ class StatTracker
   end
 
   def best_offense
-    binding.pry
+    best_o = Hash.new(0)
+    @stats[2].each do |row|
+      best_o[row[:team_id]] += row[:goals].to_i
+    end
+    team = best_o.max[0]
+    @stats[1].find{ |row| row[:team_id] == team }[:teamname]
   end
 
   def worst_offense
