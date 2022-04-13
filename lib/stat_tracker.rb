@@ -91,7 +91,7 @@ class StatTracker
 
   # -----team statistics-------
 
-  def team_info
+  def team_info(team_id)
   end
 
   def best_season
