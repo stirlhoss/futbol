@@ -102,18 +102,28 @@ class StatTracker
   end
 
   def best_season(team_id)
+
   end
 
-  def worst_season
+  def worst_season(team_id)
+
   end
 
-  def average_win_percentage
+  def average_win_percentage(team_id)
+    t_games = 0
+    t_wins = 0
+    games_by_team = @stats[2]
+    games_by_team.each do |row|
+      t_games += 1 if team_id == row[:team_id]
+      t_wins += 1 if team_id == row[:team_id] && row[:result] == "WIN"
+    end
+    average = ((t_wins.to_f / t_games) * 100).round(2)
   end
 
   def most_goals_scored
   end
 
-  def fewest_goals_scored
+  def fewest_goals_scored(team_id)
   end
 
   def favorite_opponent

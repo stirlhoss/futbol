@@ -36,8 +36,8 @@ RSpec.describe 'team_spec' do
     expect(@stat_tracker.worst_season("5")).to eq("20122014")
   end
 
-  xit "can return a teams average win percentage of all games for a team" do
-    expect(@stat_tracker.average_win_percentage("5")).to eq(53.33)
+  it "can return a teams average win percentage of all games for a team" do
+    expect(@stat_tracker.average_win_percentage("6")).to eq(88.89)
   end
 
   xit "can return the highest number of goals a particular team has scored in a single game" do
