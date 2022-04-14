@@ -81,20 +81,32 @@ class StatTracker
   end
 
   def highest_scoring_visitor
-    best_away_0 = Hash.new(0)
+    best_away_o = Hash.new(0)
     game_counter = Hash.new(0)
     @stats[0].each do |row|
-      best_away_0[row[:away_team_id]] += row[:away_goals].to_i
+      best_away_o[row[:away_team_id]] += row[:away_goals].to_i
       game_counter[row[:away_team_id]] += 1
     end
-    best_away_0.each do |team_id, goals|
-      best_away_0[team_id] = goals/game_counter[team_id].to_f
+    best_away_o.each do |team_id, goals|
+      best_away_o[team_id] = goals/game_counter[team_id].to_f
     end
-    team = best_away_0.max_by { |key, value| value }[0]
+    team = best_away_o.max_by { |key, value| value }[0]
     @stats[1].find{ |row| row[:team_id] == team}[:teamname]
   end
 
   def highest_scoring_home_team
+    best_home_o = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      best_home_o[row[:home_team_id]] += row[:home_goals].to_i
+      game_counter[row[:home_team_id]] += 1
+    end
+    best_home_o.each do |team_id, goals|
+      best_home_o[team_id] = goals/game_counter[team_id].to_f
+    end
+    team = best_home_o.max_by { |key, value| value }[0]
+    @stats[1].find{ |row| row[:team_id] == team}[:teamname]
+
   end
 
   def lowest_scoring_visitor
