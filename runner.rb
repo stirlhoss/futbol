@@ -13,3 +13,6 @@ locations = {
 }
 
 stat_tracker = StatTracker.from_csv(locations)
+p stat_tracker.percentage_ties
+p stat_tracker.percentage_home_wins
+p stat_tracker.percentage_visitor_wins
