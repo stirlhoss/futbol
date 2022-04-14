@@ -71,8 +71,8 @@ describe 'games' do
   describe 'average_goals_by_season' do
     it 'averages the total number of goals and stores them in a hash by season' do
       expect(@stat_tracker.average_goals_by_season).to eq({
-        201222013 => 3.40,
-        201222014 => 4.20
+        20122013 => 3.70,
+        20122014 => 3.90
         })
     end
   end
