@@ -106,13 +106,34 @@ class StatTracker
     end
     team = best_home_o.max_by { |key, value| value }[0]
     @stats[1].find{ |row| row[:team_id] == team}[:teamname]
-
   end
 
   def lowest_scoring_visitor
+    worst_away_o = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      worst_away_o[row[:away_team_id]] += row[:away_goals].to_i
+      game_counter[row[:away_team_id]] += 1
+    end
+    worst_away_o.each do |team_id, goals|
+      worst_away_o[team_id] = goals/game_counter[team_id].to_f
+    end
+    team = worst_away_o.min_by { |key, value| value }[0]
+    @stats[1].find{ |row| row[:team_id] == team}[:teamname]
   end
 
   def lowest_scoring_home_team
+    worst_home_o = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      worst_home_o[row[:home_team_id]] += row[:home_goals].to_i
+      game_counter[row[:home_team_id]] += 1
+    end
+    worst_home_o.each do |team_id, goals|
+      worst_home_o[team_id] = goals/game_counter[team_id].to_f
+    end
+    team = worst_home_o.min_by { |key, value| value }[0]
+    @stats[1].find{ |row| row[:team_id] == team}[:teamname]
   end
 
   # -----season statistics-------
