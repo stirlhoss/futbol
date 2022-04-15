@@ -115,7 +115,16 @@ class StatTracker
   end
 
   def worst_season(team_id)
-
+    t_wins = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      if team_id == row[:away_team_id] && row[:away_goals] > row[:home_goals]
+        t_wins[row[:season]] +=1
+      elsif team_id == row[:home_team_id] && row[:away_goals] < row[:home_goals]
+        t_wins[row[:season]] +=1
+      end
+    end
+    season = t_wins.min_by{|key, value| value}[0]
   end
 
   def average_win_percentage(team_id)

@@ -32,8 +32,8 @@ RSpec.describe 'team_spec' do
     expect(@stat_tracker.best_season("5")).to eq("20152016")
   end
 
-  xit "can return the worst season for a given team" do
-    expect(@stat_tracker.worst_season("5")).to eq("20122014")
+  it "can return the worst season for a given team" do
+    expect(@stat_tracker.worst_season("5")).to eq("20162017")
   end
 
   it "can return a teams average win percentage of all games for a team" do
