@@ -137,22 +137,73 @@ class StatTracker
 
   # -----team statistics-------
 
-  def team_info
+  def team_info(team_id)
+    team_info_hash = Hash.new(0)
+    @stats[1].each do |row|
+      row.each do |column, value|
+        team_info_hash[column] = value if team_id == row[:team_id]
+      end
+    end
+    return team_info_hash
   end
 
-  def best_season
+  def best_season(team_id)
+    t_wins = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      if team_id == row[:away_team_id] && row[:away_goals] > row[:home_goals]
+        t_wins[row[:season]] +=1
+      elsif team_id == row[:home_team_id] && row[:away_goals] < row[:home_goals]
+        t_wins[row[:season]] +=1
+      end
+    end
+    season = t_wins.max_by{|key, value| value}[0]
   end
 
-  def worst_season
+  def worst_season(team_id)
+    t_wins = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      if team_id == row[:away_team_id] && row[:away_goals] > row[:home_goals]
+        t_wins[row[:season]] +=1
+      elsif team_id == row[:home_team_id] && row[:away_goals] < row[:home_goals]
+        t_wins[row[:season]] +=1
+      end
+    end
+    season = t_wins.min_by{|key, value| value}[0]
   end
 
-  def average_win_percentage
+  def average_win_percentage(team_id)
+    t_games = 0
+    t_wins = 0
+    games_by_team = @stats[2]
+    games_by_team.each do |row|
+      t_games += 1 if team_id == row[:team_id]
+      t_wins += 1 if team_id == row[:team_id] && row[:result] == "WIN"
+    end
+    average = ((t_wins.to_f / t_games) * 100).round(2)
   end
 
-  def most_goals_scored
+  def most_goals_scored(team_id)
+    t_goals = Hash.new(0)
+    # game_counter = Hash.new(0)
+    @stats[2].each do |row|
+      if team_id == row[:team_id]
+        t_goals[row[:game_id]] = row[:goals]
+      end
+    end
+    t_goals.max_by{|key, value| value}[1].to_i
   end
 
-  def fewest_goals_scored
+  def fewest_goals_scored(team_id)
+    t_goals = Hash.new(0)
+    # game_counter = Hash.new(0)
+    @stats[2].each do |row|
+      if team_id == row[:team_id]
+        t_goals[row[:game_id]] = row[:goals]
+      end
+    end
+    t_goals.min_by{|key, value| value}[1].to_i
   end
 
   def favorite_opponent
