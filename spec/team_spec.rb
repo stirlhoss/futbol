@@ -40,11 +40,11 @@ RSpec.describe 'team_spec' do
     expect(@stat_tracker.average_win_percentage("6")).to eq(88.89)
   end
 
-  xit "can return the highest number of goals a particular team has scored in a single game" do
-    expect(@stat_tracker.most_goals_scored("5")).to eq(4)
+  it "can return the highest number of goals a particular team has scored in a single game" do
+    expect(@stat_tracker.most_goals_scored("5")).to eq(1)
   end
 
-  xit "can return the lowest numer of goals a particular team has scored in a single game." do
+  it "can return the lowest numer of goals a particular team has scored in a single game." do
     expect(@stat_tracker.fewest_goals_scored("5")).to eq(0)
   end
 

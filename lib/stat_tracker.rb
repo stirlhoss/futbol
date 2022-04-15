@@ -138,10 +138,26 @@ class StatTracker
     average = ((t_wins.to_f / t_games) * 100).round(2)
   end
 
-  def most_goals_scored
+  def most_goals_scored(team_id)
+    t_goals = Hash.new(0)
+    # game_counter = Hash.new(0)
+    @stats[2].each do |row|
+      if team_id == row[:team_id]
+        t_goals[row[:game_id]] = row[:goals]
+      end
+    end
+    t_goals.max_by{|key, value| value}[1].to_i
   end
 
   def fewest_goals_scored(team_id)
+    t_goals = Hash.new(0)
+    # game_counter = Hash.new(0)
+    @stats[2].each do |row|
+      if team_id == row[:team_id]
+        t_goals[row[:game_id]] = row[:goals]
+      end
+    end
+    t_goals.min_by{|key, value| value}[1].to_i
   end
 
   def favorite_opponent
