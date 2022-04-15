@@ -13,4 +13,3 @@ locations = {
 }
 
 stat_tracker = StatTracker.from_csv(locations)
-p stat_tracker.team_info("16")
