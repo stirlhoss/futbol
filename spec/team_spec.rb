@@ -28,8 +28,8 @@ RSpec.describe 'team_spec' do
       })
   end
 
-  xit "returns the best season for a given team" do
-    expect(@stat_tracker.best_season("5")).to eq("20122016")
+  it "returns the best season for a given team" do
+    expect(@stat_tracker.best_season("5")).to eq("20152016")
   end
 
   xit "can return the worst season for a given team" do

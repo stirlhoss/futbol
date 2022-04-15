@@ -95,14 +95,23 @@ class StatTracker
     team_info_hash = Hash.new(0)
     @stats[1].each do |row|
       row.each do |column, value|
-        team_info_hash[column] = value if team_id ==row[:team_id]
+        team_info_hash[column] = value if team_id == row[:team_id]
       end
     end
     return team_info_hash
   end
 
   def best_season(team_id)
-
+    t_wins = Hash.new(0)
+    game_counter = Hash.new(0)
+    @stats[0].each do |row|
+      if team_id == row[:away_team_id] && row[:away_goals] > row[:home_goals]
+        t_wins[row[:season]] +=1
+      elsif team_id == row[:home_team_id] && row[:away_goals] < row[:home_goals]
+        t_wins[row[:season]] +=1
+      end
+    end
+    season = t_wins.max_by{|key, value| value}[0]
   end
 
   def worst_season(team_id)
