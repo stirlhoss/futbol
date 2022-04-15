@@ -44,7 +44,7 @@ class StatTracker
     @stats[0].each do |row|
       home_wins += 1 if row[:home_goals] > row[:away_goals]
     end
-    return ((home_wins.to_f / games) * 100).round(3)
+    return ((home_wins.to_f / games) * 100).round(2)
   end
 
   def percentage_visitor_wins
@@ -56,7 +56,7 @@ class StatTracker
     @stats[0].each do |row|
       visitor_wins += 1 if row[:home_goals] < row[:away_goals]
     end
-    return ((visitor_wins.to_f / games) * 100).round(3)
+    return ((visitor_wins.to_f / games) * 100).round(2)
   end
 
   def percentage_ties
@@ -68,7 +68,7 @@ class StatTracker
     @stats[0].each do |row|
       tie_games += 1 if row[:home_goals] == row[:away_goals]
     end
-    return ((tie_games.to_f / games) * 100).round(3)
+    return ((tie_games.to_f / games) * 100).round(2)
   end
 
   def count_of_games_by_season
