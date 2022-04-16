@@ -5,9 +5,9 @@ require './lib/stat_tracker'
 
 describe StatTracker do
   before :each do
-    game_path = './test_data/games.csv'
-    team_path = './test_data/teams.csv'
-    game_teams_path = './test_data/game_teams.csv'
+    game_path = './data/games.csv'
+    team_path = './data/teams.csv'
+    game_teams_path = './data/game_teams.csv'
 
     locations = {
       games: game_path,
@@ -21,11 +21,11 @@ describe StatTracker do
   end
 
   it "gets team with best offense" do
-    expect(@stat_tracker.best_offense).to eq("FC Dallas")
+    expect(@stat_tracker.best_offense).to eq("Reign FC")
   end
 
   it "gets team with worst offense" do
-    expect(@stat_tracker.worst_offense).to eq("Sporting Kansas City")
+    expect(@stat_tracker.worst_offense).to eq("Utah Royals FC")
   end
 
   it "gets team with highest avg away goals" do
@@ -33,14 +33,14 @@ describe StatTracker do
   end
 
   it "gets team with highest avg home goals" do
-    expect(@stat_tracker.highest_scoring_home_team).to eq("New York City FC")
+    expect(@stat_tracker.highest_scoring_home_team).to eq("Reign FC")
   end
 
   it "gets team with lowest avg away goals" do
-    expect(@stat_tracker.lowest_scoring_visitor).to eq("Sporting Kansas City")
+    expect(@stat_tracker.lowest_scoring_visitor).to eq("San Jose Earthquakes")
   end
 
   it "gets team with lowest avg home goals" do
-    expect(@stat_tracker.lowest_scoring_home_team).to eq("Sporting Kansas City")
+    expect(@stat_tracker.lowest_scoring_home_team).to eq("Utah Royals FC")
   end
 end
