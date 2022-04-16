@@ -1,4 +1,6 @@
 require 'pry'
+require 'simplecov'
+SimpleCov.start
 require 'rspec'
 require './lib/stat_tracker'
 # require './test_data/games.csv'
