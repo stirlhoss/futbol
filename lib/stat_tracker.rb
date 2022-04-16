@@ -182,7 +182,7 @@ class StatTracker
       worst_home_o[team_id] = goals/game_counter[team_id].to_f
     end
     team = worst_home_o.min_by { |key, value| value }[0]
-    @stats[:teams].find{ |row| row[:team_id] == team}[:teamname]
+    @stats[:teams].find { |row| row[:team_id] == team}[:teamname]
   end
 
   # -----season statistics-------
@@ -195,12 +195,13 @@ class StatTracker
     season_array.each do |game|
       game_id_array << game[:game_id]
     end
+    binding.pry
     @stats[:game_teams].each do |row|
       coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN" && game_id_array.include?(row[:game_id])
       coach_total_hash[row[:head_coach]] += 1 if game_id_array.include?(row[:game_id])
     end
     wphash = coach_win_hash.map {|key,value|[key, value.to_f / coach_total_hash[key].to_f]}
-    wphash.max_by{|coach,percent| percent}[0]
+    wphash.max_by {|coach,percent| percent}[0]
   end
 
   def worst_coach(season)
