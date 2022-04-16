@@ -42,7 +42,7 @@ class StatTracker
       home_wins += 1 if row[:home_goals] > row[:away_goals]
       games += 1
     end
-    return ((home_wins.to_f / games) * 100).round(2)
+    return (home_wins.to_f / games).round(2)
   end
 
   def percentage_visitor_wins
@@ -52,7 +52,7 @@ class StatTracker
       visitor_wins += 1 if row[:home_goals] < row[:away_goals]
       games += 1
     end
-    return ((visitor_wins.to_f / games) * 100).round(2)
+    return (visitor_wins.to_f / games).round(2)
   end
 
   def percentage_ties
@@ -62,13 +62,13 @@ class StatTracker
       tie_games += 1 if row[:home_goals] == row[:away_goals]
       games += 1
     end
-    return ((tie_games.to_f / games) * 100).round(2)
+    return (tie_games.to_f / games).round(2)
   end
 
   def count_of_games_by_season
     games_by_seasons = Hash.new(0)
     @stats[:games].each do |row|
-        games_by_seasons[row[:season].to_i] += 1
+        games_by_seasons[row[:season]] += 1
       end
     return games_by_seasons
   end
@@ -89,7 +89,7 @@ class StatTracker
     goals = Hash.new(0)
     @stats[:games].each do |row|
       goals[row[:season]] += row[:away_goals].to_i + row[:home_goals].to_i
-      avg_goals_by_seasons[row[:season].to_i] = (goals[row[:season]].to_f / games_per_season[row[:season].to_i]).round(2)
+      avg_goals_by_seasons[row[:season]] = (goals[row[:season]].to_f / games_per_season[row[:season].to_i]).round(2)
     end
     return avg_goals_by_seasons
   end
@@ -354,6 +354,14 @@ class StatTracker
   end
 
   def favorite_opponent(team_id)
+<<<<<<< HEAD
+    games_won_vs_team = {}
+    games_played_vs_team = 0
+    @stats[:games].each do |row|
+      games_won_vs_team[row[:game_id]] += 1 if row[team_id] == team_id
+      games_played_vs_team +=1
+    end
+=======
     team_wins = Hash.new(0)
     team_total = Hash.new(0)
     @stats[:games].each do |row|
@@ -368,6 +376,7 @@ class StatTracker
     wphash = team_wins.map {|key,value|[key, value.to_f / team_total[key].to_f]}
     favorite_team_id = wphash.min_by{|team,percent| percent}[0]
     @stats[:teams].find {|row| row[:team_id] == favorite_team_id}[:teamname]
+>>>>>>> 6c3c62fe2581e41e97cac33a550a09e0bd539df1
   end
 
   def rival(team_id)

@@ -24,8 +24,8 @@ describe StatTracker do
     stat_tracker = StatTracker.from_csv(locations)
     expect(stat_tracker.class).to eq(StatTracker)
     expect(stat_tracker.stats.class).to eq(Array)
-    expect(stat_tracker.stats[0].class).to eq(CSV::Table)
-    expect(stat_tracker.stats[0][:game_id][0]).to eq('2012030221')
+    expect(stat_tracker.stats[:game].class).to eq(CSV::Table)
+    expect(stat_tracker.stats[:game][:game_id][0]).to eq('2012030221')
   end
 end
 
