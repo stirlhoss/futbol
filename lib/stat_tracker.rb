@@ -354,12 +354,6 @@ class StatTracker
   end
 
   def favorite_opponent(team_id)
-    games_won_vs_team = {}
-    games_played_vs_team = 0
-    @stats[:games].each do |row|
-      games_won_vs_team[row[:game_id]] += 1 if row[team_id] == team_id
-      games_played_vs_team +=1
-    end
     team_wins = Hash.new(0)
     team_total = Hash.new(0)
     @stats[:games].each do |row|
