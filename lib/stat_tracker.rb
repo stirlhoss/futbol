@@ -354,14 +354,12 @@ class StatTracker
   end
 
   def favorite_opponent(team_id)
-<<<<<<< HEAD
     games_won_vs_team = {}
     games_played_vs_team = 0
     @stats[:games].each do |row|
       games_won_vs_team[row[:game_id]] += 1 if row[team_id] == team_id
       games_played_vs_team +=1
     end
-=======
     team_wins = Hash.new(0)
     team_total = Hash.new(0)
     @stats[:games].each do |row|
@@ -376,7 +374,6 @@ class StatTracker
     wphash = team_wins.map {|key,value|[key, value.to_f / team_total[key].to_f]}
     favorite_team_id = wphash.min_by{|team,percent| percent}[0]
     @stats[:teams].find {|row| row[:team_id] == favorite_team_id}[:teamname]
->>>>>>> 6c3c62fe2581e41e97cac33a550a09e0bd539df1
   end
 
   def rival(team_id)
