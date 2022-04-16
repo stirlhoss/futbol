@@ -62,7 +62,7 @@ class StatTracker
       tie_games += 1 if row[:home_goals] == row[:away_goals]
       games += 1
     end
-    return ((tie_games.to_f / games) * 100).round(2)
+    return (tie_games.to_f / games).round(2)
   end
 
   def count_of_games_by_season
