@@ -52,7 +52,7 @@ RSpec.describe 'team_spec' do
     expect(@stat_tracker.favorite_opponent("5")).to eq("DC United")
   end
 
-  xit "can return the Name of the opponent that has the highest win percentage against the given team." do
-    expect(@stat_tracker.rival("5")).to eq("6")
+  it "can return the Name of the opponent that has the highest win percentage against the given team." do
+    expect(@stat_tracker.rival("5")).to eq("FC Dallas")
   end
 end
