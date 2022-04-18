@@ -191,14 +191,16 @@ class StatTracker
   def winningest_coach(season)
     coach_win_hash = Hash.new(0)
     coach_total_hash = Hash.new(0)
-    game_id_array = []
+    game_id_hash = Hash.new(0)
     season_array = @stats[:games].find_all{|row| row[:season] == season}
     season_array.each do |game|
-      game_id_array << game[:game_id]
+      game_id_hash[game[:game_id]] = 1
     end
     @stats[:game_teams].each do |row|
-      coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN" && game_id_array.include?(row[:game_id])
-      coach_total_hash[row[:head_coach]] += 1 if game_id_array.include?(row[:game_id])
+      if game_id_hash[row[:game_id]] == 1
+        coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN"
+        coach_total_hash[row[:head_coach]] += 1
+      end
     end
     wphash = coach_win_hash.map {|key,value|[key, value.to_f / coach_total_hash[key].to_f]}
     wphash.max_by {|coach,percent| percent}[0]
@@ -207,14 +209,16 @@ class StatTracker
   def worst_coach(season)
     coach_win_hash = Hash.new(0)
     coach_total_hash = Hash.new(0)
-    game_id_array = []
+    game_id_hash = Hash.new(0)
     season_array = @stats[:games].find_all{|row| row[:season] == season}
     season_array.each do |game|
-      game_id_array << game[:game_id]
+      game_id_hash[game[:game_id]] = 1
     end
     @stats[:game_teams].each do |row|
-      coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN" && game_id_array.include?(row[:game_id])
-      coach_total_hash[row[:head_coach]] += 1 if game_id_array.include?(row[:game_id])
+      if game_id_hash[row[:game_id]] == 1
+        coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN"
+        coach_total_hash[row[:head_coach]] += 1
+      end
     end
     wphash = coach_win_hash.map {|key,value|[key, value.to_f / coach_total_hash[key].to_f]}
     wphash.min_by{|coach,percent| percent}[0]
@@ -223,14 +227,16 @@ class StatTracker
   def most_accurate_team(season)
   shots_hash = Hash.new(0)
   goal_hash = Hash.new(0)
-  game_id_array = []
+  game_id_hash = Hash.new(0)
   season_array = @stats[:games].find_all{|row| row[:season] == season}
   season_array.each do |game|
-    game_id_array << game[:game_id]
+    game_id_hash[game[:game_id]] = 1
   end
   @stats[:game_teams].each do |row|
-    shots_hash[row[:team_id]] += row[:shots].to_i if game_id_array.include?(row[:game_id])
-    goal_hash[row[:team_id]] += row[:goals].to_i if game_id_array.include?(row[:game_id])
+    if game_id_hash[row[:game_id]] == 1
+      shots_hash[row[:team_id]] += row[:shots].to_i
+      goal_hash[row[:team_id]] += row[:goals].to_i
+    end
   end
   ratio_hash = shots_hash.map {|key,value|[key, goal_hash[key].to_f / value.to_f]}
   team_id = ratio_hash.max_by{|id,percent| percent}[0]
@@ -240,14 +246,16 @@ class StatTracker
   def least_accurate_team(season)
     shots_hash = Hash.new(0)
     goal_hash = Hash.new(0)
-    game_id_array = []
+    game_id_hash = Hash.new(0)
     season_array = @stats[:games].find_all{|row| row[:season] == season}
     season_array.each do |game|
-      game_id_array << game[:game_id]
+      game_id_hash[game[:game_id]] = 1
     end
     @stats[:game_teams].each do |row|
-      shots_hash[row[:team_id]] += row[:shots].to_i if game_id_array.include?(row[:game_id])
-      goal_hash[row[:team_id]] += row[:goals].to_i if game_id_array.include?(row[:game_id])
+      if game_id_hash[row[:game_id]] == 1
+        shots_hash[row[:team_id]] += row[:shots].to_i
+        goal_hash[row[:team_id]] += row[:goals].to_i
+      end
     end
     ratio_hash = shots_hash.map {|key,value|[key, goal_hash[key].to_f / value.to_f]}
     team_id = ratio_hash.min_by{|id,percent| percent}[0]
@@ -256,13 +264,13 @@ class StatTracker
 
   def most_tackles(season)
     tackles_hash = Hash.new(0)
-    game_id_array = []
+    game_id_hash = Hash.new(0)
     season_array = @stats[:games].find_all{|row| row[:season] == season}
     season_array.each do |game|
-      game_id_array << game[:game_id]
+      game_id_hash[game[:game_id]] = 1
     end
     @stats[:game_teams].each do |row|
-      tackles_hash[row[:team_id]] += row[:tackles].to_i if game_id_array.include?(row[:game_id])
+      tackles_hash[row[:team_id]] += row[:tackles].to_i if game_id_hash[row[:game_id]] == 1
     end
     team_id = tackles_hash.max_by{|id,tackles| tackles}[0]
     @stats[:teams].find {|row| row[:team_id] == team_id}[:teamname]
@@ -270,13 +278,13 @@ class StatTracker
 
   def fewest_tackles(season)
     tackles_hash = Hash.new(0)
-    game_id_array = []
+    game_id_hash = Hash.new(0)
     season_array = @stats[:games].find_all{|row| row[:season] == season}
     season_array.each do |game|
-      game_id_array << game[:game_id]
+      game_id_hash[game[:game_id]] = 1
     end
     @stats[:game_teams].each do |row|
-      tackles_hash[row[:team_id]] += row[:tackles].to_i if game_id_array.include?(row[:game_id])
+      tackles_hash[row[:team_id]] += row[:tackles].to_i if game_id_hash[row[:game_id]] == 1
     end
     team_id = tackles_hash.min_by{|id,tackles| tackles}[0]
     @stats[:teams].find {|row| row[:team_id] == team_id}[:teamname]
