@@ -23,13 +23,13 @@ describe StatTracker do
     }
     stat_tracker = StatTracker.from_csv(locations)
     expect(stat_tracker.class).to eq(StatTracker)
-    expect(stat_tracker.stats.class).to eq(Array)
-    expect(stat_tracker.stats[:game].class).to eq(CSV::Table)
-    expect(stat_tracker.stats[:game][:game_id][0]).to eq('2012030221')
+    expect(stat_tracker.stats.class).to eq(Hash)
+    expect(stat_tracker.stats[:games].class).to eq(CSV::Table)
+    expect(stat_tracker.stats[:games][:game_id][0]).to eq('2012030221')
   end
 end
 
-describe StatTracker functionality do
+describe "StatTracker functionality" do
   before :each do
     game_path = './data/games.csv'
     team_path = './data/teams.csv'
@@ -155,26 +155,71 @@ describe StatTracker functionality do
 
   it "can name coach with best season win percentage" do
 
-    expect(@stat_tracker.winningest_coach(20132014)).to eq("Claude Julien")
+    expect(@stat_tracker.winningest_coach("20132014")).to eq("Claude Julien")
   end
 
   it "can name coach with worst season win percentage" do
-    expect(@stat_tracker.worst_coach(20132014)).to eq()
+    expect(@stat_tracker.worst_coach("20132014")).to eq("Ron Rolston")
   end
 
   it "can name most accurate team" do
-    expect(@stat_tracker.most_accurate_team(20132014)).to eq()
+    expect(@stat_tracker.most_accurate_team("20132014")).to eq("Real Salt Lake")
   end
 
   it "can name least accurate team" do
-    expect(@stat_tracker.least_accurate_team(20132014)).to eq()
+    expect(@stat_tracker.least_accurate_team("20132014")).to eq("New York City FC")
   end
 
   it "can name team with most tackles" do
-    expect(@stat_tracker.most_tackles(20132014)).to eq()
+    expect(@stat_tracker.most_tackles("20132014")).to eq("FC Cincinnati")
   end
 
   it "can name team with fewest tackles" do
-    expect(@stat_tracker.fewest_tackles(20132014)).to eq()
+    expect(@stat_tracker.fewest_tackles("20132014")).to eq("Atlanta United")
+  end
+end
+
+#====================
+#Team spec tests
+#====================
+
+
+  it "returns the info of a team" do
+    expect(@stat_tracker.team_info("1")).to eq({
+      abbreviation: "ATL",
+      franchiseid: "23",
+      link: "/api/v1/teams/1",
+      stadium: "Mercedes-Benz Stadium",
+      team_id: "1",
+      teamname: "Atlanta United"
+      })
+  end
+
+  it "returns the best season for a given team" do
+    expect(@stat_tracker.best_season("5")).to eq("20162017")
+  end
+
+  it "can return the worst season for a given team" do
+    expect(@stat_tracker.worst_season("5")).to eq("20122013")
+  end
+
+  it "can return a teams average win percentage of all games for a team" do
+    expect(@stat_tracker.average_win_percentage("6")).to eq(49.22)
+  end
+
+  it "can return the highest number of goals a particular team has scored in a single game" do
+    expect(@stat_tracker.most_goals_scored("5")).to eq(6)
+  end
+
+  it "can return the lowest numer of goals a particular team has scored in a single game." do
+    expect(@stat_tracker.fewest_goals_scored("5")).to eq(0)
+  end
+
+  xit "can return the name of the opponent that has the lowest win percentage against the given team" do
+    expect(@stat_tracker.favorite_opponent("5")).to eq("14")
+  end
+
+  xit "can return the Name of the opponent that has the highest win percentage against the given team." do
+    expect(@stat_tracker.rival("5")).to eq("6")
   end
 end

@@ -2,6 +2,7 @@ require 'pry'
 require 'csv'
 
 class StatTracker
+  attr_reader :stats
 
   def initialize(stats)
     @stats = stats
@@ -195,7 +196,6 @@ class StatTracker
     season_array.each do |game|
       game_id_array << game[:game_id]
     end
-    binding.pry
     @stats[:game_teams].each do |row|
       coach_win_hash[row[:head_coach]] += 1 if row[:result] == "WIN" && game_id_array.include?(row[:game_id])
       coach_total_hash[row[:head_coach]] += 1 if game_id_array.include?(row[:game_id])
