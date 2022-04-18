@@ -358,15 +358,16 @@ class StatTracker
     team_total = Hash.new(0)
     @stats[:games].each do |row|
       if team_id == row[:away_team_id]
-        team_wins[row[:home_team_id]] += 1 if row[:home_goals] > row[:away_goals]
+        team_wins[row[:home_team_id]] += 1 if row[:home_goals] < row[:away_goals]
         team_total[row[:home_team_id]] += 1
       elsif team_id == row[:home_team_id]
-        team_wins[row[:away_team_id]] += 1 if row[:away_goals] > row[:home_goals]
+        team_wins[row[:away_team_id]] += 1 if row[:away_goals] < row[:home_goals]
         team_total[row[:away_team_id]] += 1
       end
     end
     wphash = team_wins.map {|key,value|[key, value.to_f / team_total[key].to_f]}
-    favorite_team_id = wphash.min_by{|team,percent| percent}[0]
+    favorite_team_id = wphash.max_by{|team,percent| percent}[0]
+    # binding.pry
     @stats[:teams].find {|row| row[:team_id] == favorite_team_id}[:teamname]
   end
 

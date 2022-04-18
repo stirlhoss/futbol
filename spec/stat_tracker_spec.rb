@@ -216,7 +216,7 @@ describe "StatTracker functionality" do
   end
 
   it "can return the name of the opponent that has the lowest win percentage against the given team" do
-    expect(@stat_tracker.favorite_opponent("5")).to eq("Washington Spirit FC")
+    expect(@stat_tracker.favorite_opponent("18")).to eq("DC United")
   end
 
   it "can return the Name of the opponent that has the highest win percentage against the given team." do
