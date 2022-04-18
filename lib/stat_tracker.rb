@@ -90,7 +90,7 @@ class StatTracker
     goals = Hash.new(0)
     @stats[:games].each do |row|
       goals[row[:season]] += row[:away_goals].to_i + row[:home_goals].to_i
-      avg_goals_by_seasons[row[:season]] = (goals[row[:season]].to_f / games_per_season[row[:season].to_i]).round(2)
+      avg_goals_by_seasons[row[:season]] = (goals[row[:season]].to_f / games_per_season[row[:season]]).round(2)
     end
     return avg_goals_by_seasons
   end
@@ -328,7 +328,7 @@ class StatTracker
       t_games += 1 if team_id == row[:team_id]
       t_wins += 1 if team_id == row[:team_id] && row[:result] == "WIN"
     end
-    average = ((t_wins.to_f / t_games) * 100).round(2)
+    average = (t_wins.to_f / t_games).round(2)
   end
 
   def most_goals_scored(team_id)
