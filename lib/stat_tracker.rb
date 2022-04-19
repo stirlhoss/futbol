@@ -1,5 +1,6 @@
 require 'pry'
 require 'csv'
+require_relative '../lib/game'
 
 class StatTracker
   attr_reader :stats

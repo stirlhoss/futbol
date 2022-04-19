@@ -1,7 +1,5 @@
 # lib/game.rb
-require './lib/stat_tracker'
-
-class Game < StatTracker
+class Game
   attr_reader :stats,
               :game_id,
               :season,
