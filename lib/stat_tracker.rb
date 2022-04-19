@@ -6,6 +6,7 @@ class StatTracker
 
   def initialize(stats)
     @stats = stats
+    @games = Game.game_build(stats)
   end
 
   def self.from_csv(locations)
@@ -18,9 +19,9 @@ class StatTracker
 
   def highest_total_score
     total = 0
-    @stats[:games].each do |row|
-      if total < row[:home_goals].to_i + row[:away_goals].to_i
-        total = row[:home_goals].to_i + row[:away_goals].to_i
+    @games.each do |row|
+      if total < row.home_goals.to_i + row.away_goals.to_i
+        total = row.home_goals.to_i + row.away_goals.to_i
       end
     end
     return total
@@ -28,9 +29,9 @@ class StatTracker
 
   def lowest_total_score
     total = 1
-    @stats[:games].each do |row|
-      if total > row[:home_goals].to_i + row[:away_goals].to_i
-        total = row[:home_goals].to_i + row[:away_goals].to_i
+    @games.each do |row|
+      if total > row.home_goals.to_i + row.away_goals.to_i
+        total = row.home_goals.to_i + row.away_goals.to_i
       end
     end
     return total
@@ -39,8 +40,8 @@ class StatTracker
   def percentage_home_wins
     games = 0
     home_wins = 0
-    @stats[:games].each do |row|
-      home_wins += 1 if row[:home_goals] > row[:away_goals]
+    @games.each do |row|
+      home_wins += 1 if row.home_goals > row.away_goals
       games += 1
     end
     return (home_wins.to_f / games).round(2)
@@ -49,8 +50,8 @@ class StatTracker
   def percentage_visitor_wins
     games = 0
     visitor_wins = 0
-    @stats[:games].each do |row|
-      visitor_wins += 1 if row[:home_goals] < row[:away_goals]
+    @games.each do |row|
+      visitor_wins += 1 if row.home_goals < row.away_goals
       games += 1
     end
     return (visitor_wins.to_f / games).round(2)
@@ -59,8 +60,8 @@ class StatTracker
   def percentage_ties
     games = 0
     tie_games = 0
-    @stats[:games].each do |row|
-      tie_games += 1 if row[:home_goals] == row[:away_goals]
+    @games.each do |row|
+      tie_games += 1 if row.home_goals == row.away_goals
       games += 1
     end
     return (tie_games.to_f / games).round(2)
@@ -68,8 +69,8 @@ class StatTracker
 
   def count_of_games_by_season
     games_by_seasons = Hash.new(0)
-    @stats[:games].each do |row|
-        games_by_seasons[row[:season]] += 1
+    @games.each do |row|
+        games_by_seasons[row.season] += 1
       end
     return games_by_seasons
   end
@@ -77,8 +78,8 @@ class StatTracker
   def average_goals_per_game
     games = 0
     goals = 0
-    @stats[:games].each do |row|
-      goals += row[:away_goals].to_i + row[:home_goals].to_i
+    @games.each do |row|
+      goals += row.away_goals.to_i + row.home_goals.to_i
       games += 1
     end
     return (goals.to_f / games).round(2)
@@ -88,9 +89,9 @@ class StatTracker
     games_per_season = count_of_games_by_season
     avg_goals_by_seasons = Hash.new(0)
     goals = Hash.new(0)
-    @stats[:games].each do |row|
-      goals[row[:season]] += row[:away_goals].to_i + row[:home_goals].to_i
-      avg_goals_by_seasons[row[:season]] = (goals[row[:season]].to_f / games_per_season[row[:season]]).round(2)
+    @games.each do |row|
+      goals[row.season] += row.away_goals.to_i + row.home_goals.to_i
+      avg_goals_by_seasons[row.season] = (goals[row.season].to_f / games_per_season[row.season]).round(2)
     end
     return avg_goals_by_seasons
   end
