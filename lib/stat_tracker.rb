@@ -1,5 +1,7 @@
+# lib/stat_tracker.rb
 require 'pry'
 require 'csv'
+require './lib/game'
 
 class StatTracker
   attr_reader :stats

@@ -1,9 +1,8 @@
 # lib/game.rb
 require './lib/stat_tracker'
 
-class Game < StatTracker
-  attr_reader :stats,
-              :game_id,
+class Game #< StatTracker
+  attr_reader :game_id,
               :season,
               :type,
               :date_time,
@@ -34,5 +33,4 @@ class Game < StatTracker
     end
     game_array
   end
-
 end
