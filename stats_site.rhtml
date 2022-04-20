@@ -1,0 +1,31 @@
+require 'erb'
+require './lib/stat_tracker'
+
+game_path = './data/games.csv'
+team_path = './data/teams.csv'
+game_teams_path = './data/game_teams.csv'
+
+locations = {
+  games: game_path,
+  teams: team_path,
+  game_teams: game_teams_path
+}
+
+stat_tracker = StatTracker.from_csv(locations)
+
+template = %{
+  <html>
+    <head><title>Futbol Statistics </title></head>
+    <body>
+
+      <h1 style="color:blue;">Season Statistics</h1><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ru2cCIvmdPjrfOFTT48BXlulPqTP3KYuQg&usqp=CAU" alt="Computer Man" style="width:48px;height:48px;">
+      <p><strong>These are the statistics for the Futbol Seasons</strong></p>
+
+      <p> Winningest Coach is <b><%= stat_tracker.winningest_coach %></b> </p>
+
+    </body>
+  </html>
+}
+
+renderer = ERB.new(template)
+puts output = renderer.result()
