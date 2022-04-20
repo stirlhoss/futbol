@@ -4,11 +4,13 @@ require_relative '../lib/game'
 require_relative '../lib/teams'
 require_relative '../lib/game_teams'
 class StatTracker
-  attr_reader :games,
+  attr_reader :stats,
+              :games,
               :teams,
               :game_teams
 
   def initialize(stats)
+    @stats = stats
     @games = Game.game_build(stats)
     @teams = Team.team_build(stats)
     @game_teams = GameTeam.game_team_build(stats)
