@@ -303,12 +303,8 @@ class StatTracker
 
   def team_info(team_id) #rewrite
     team_info_hash = Hash.new(0)
-    @teams.each do |row|
-      row.each do |column, value|
-        team_info_hash[column] = value if team_id == row.team_id
-      end
-    end
-    return team_info_hash
+    team = @teams.find { |team| team.team_id == team_id }
+    binding.pry
   end
 
   def best_season(team_id)
