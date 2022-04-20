@@ -1,7 +1,7 @@
 # lib/team.rb
 require './lib/stat_tracker'
 
-class Team < StatTracker
+class Team
   attr_reader :team_id,
               :franchise_id,
               :team_name,

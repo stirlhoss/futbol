@@ -1,7 +1,9 @@
+# lib/game_teams.rb
 require './lib/stat_tracker'
 
-class Game_Teams
+class GameTeams
   attr_reader :game_id,
+              :team_id,
               :hoa,
               :result,
               :settled_in,
@@ -18,6 +20,7 @@ class Game_Teams
 
   def initialize(info)
     @game_id = info[:game_id]
+    @team_id = info[:team_id]
     @hoa = info[:hoa]
     @result = info[:result]
     @settled_in = info[:settled_in]
@@ -36,7 +39,7 @@ class Game_Teams
   def self.game_build(stats)
     game_array = Array.new(0)
     stats[:game_teams].each do |row|
-      game_array << Game.new(row)
+      game_array << GameTeams.new(row)
     end
     game_array
   end
