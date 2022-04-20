@@ -5,10 +5,17 @@ require './lib/stat_tracker'
 
 describe StatTracker do
   it "exists" do
-    stats = "game_id,team_id
-    2012030221,3"
-    stat = StatTracker.new(stats)
-    expect(stat).to be_an_instance_of(StatTracker)
+    game_path = './data/games.csv'
+    team_path = './data/teams.csv'
+    game_teams_path = './data/game_teams.csv'
+
+    locations = {
+      games: game_path,
+      teams: team_path,
+      game_teams: game_teams_path
+    }
+    stat_tracker = StatTracker.from_csv(locations)
+    expect(stat_tracker).to be_an_instance_of(StatTracker)
   end
 
   it "gets data from CSV" do
@@ -23,9 +30,8 @@ describe StatTracker do
     }
     stat_tracker = StatTracker.from_csv(locations)
     expect(stat_tracker.class).to eq(StatTracker)
-    expect(stat_tracker.stats.class).to eq(Hash)
-    expect(stat_tracker.stats[:games].class).to eq(CSV::Table)
-    expect(stat_tracker.stats[:games][:game_id][0]).to eq('2012030221')
+    expect(stat_tracker.games.class).to eq(Array)
+    expect(stat_tracker.games[0].game_id).to eq('2012030221')
   end
 end
 
@@ -185,12 +191,11 @@ describe "StatTracker functionality" do
   describe 'team tests' do
   it "returns the info of a team" do
     expect(@stat_tracker.team_info("1")).to eq({
-      abbreviation: "ATL",
-      franchiseid: "23",
-      link: "/api/v1/teams/1",
-      stadium: "Mercedes-Benz Stadium",
-      team_id: "1",
-      teamname: "Atlanta United"
+      "abbreviation" => "ATL",
+      "franchise_id" => "23",
+      "link" => "/api/v1/teams/1",
+      "team_id" => "1",
+      "team_name" => "Atlanta United"
       })
     end
   end
