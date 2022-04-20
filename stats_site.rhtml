@@ -1,0 +1,96 @@
+require 'erb'
+require './lib/stat_tracker'
+
+game_path = './data/games.csv'
+team_path = './data/teams.csv'
+game_teams_path = './data/game_teams.csv'
+
+locations = {
+  games: game_path,
+  teams: team_path,
+  game_teams: game_teams_path
+}
+
+@stat_tracker = StatTracker.from_csv(locations)
+
+template = %{
+  <html>
+    <head><title>Futbol Statistics </title></head>
+    <body>
+      <h1 style="text-align:center; color:red"> Futbol <img src="https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2012/09/thumb_720_450_hocky-puck-shutterstock_98857229.jpg" alt="hockey puck" style="width:70px;height:70px;"></h1>
+
+      <h1 style="color:green;"> Game Statistics</h1>
+      <p><strong>These are the statistics for all games</strong></p>
+
+      <p> The highest total score is <b><%= @stat_tracker.highest_total_score %></b> </p>
+
+      <p> The lowest total score is <b><%= @stat_tracker.lowest_total_score %></b> </p>
+
+      <p> The percentage of games that a home team has won <b><%= @stat_tracker.percentage_home_wins %></b> </p>
+
+      <p> The percentage of games that a visitor team has won <b><%= @stat_tracker.percentage_visitor_wins %></b> </p>
+
+      <p> The percentage of games that were a tie <b><%= @stat_tracker.percentage_ties %></b> </p>
+
+      <p> The average goals across all seasons is <b><%= @stat_tracker.average_goals_per_game %></b> </p>
+
+      <p> The average goals per season are <b><%= @stat_tracker.average_goals_by_season %></b> </p>
+
+      <h1 style="color:brown;"> League Statistics</h1>
+      <p><strong>These are the league statistics </strong></p>
+
+      <p> The total number of teams is <b><%= @stat_tracker.count_of_teams %></b> </p>
+
+      <p> The team with the highest average number of goals is <b><%= @stat_tracker.best_offense %></b> </p>
+
+      <p> The team with the lowest average number of goals is <b><%= @stat_tracker.worst_offense %></b> </p>
+
+      <p> The team with the highest average score when visiting is <b><%= @stat_tracker.highest_scoring_visitor %></b> </p>
+
+      <p> The team with the highest average score when at home is <b><%= @stat_tracker.highest_scoring_home_team %></b> </p>
+
+      <p> The team with the lowest average score per visitor is <b><%= @stat_tracker.lowest_scoring_visitor %></b> </p>
+
+      <p> The team with the lowest average score per visitor is <b><%= @stat_tracker.lowest_scoring_home_team %></b> </p>
+
+
+      <h1 style="color:blue;"> Season Statistics</h1>
+      <p><strong>These are the statistics for the 2013-2014 Season</strong></p>
+
+      <p> Winningest Coach is <b><%= @stat_tracker.winningest_coach("20132014") %></b> </p>
+
+      <p> Worst Coach is <b><%= @stat_tracker.worst_coach("20132014") %></b> </p>
+
+      <p> The most accurate team is <b><%= @stat_tracker.most_accurate_team("20132014") %></b> </p>
+
+      <p> The least accurate team is <b><%= @stat_tracker.least_accurate_team("20132014") %></b> </p>
+
+      <p> The team with the most tackles <b><%= @stat_tracker.most_tackles("20132014") %></b> </p>
+
+      <p> The team with the least tackles <b><%= @stat_tracker.fewest_tackles("20132014") %></b> </p>
+
+      <h1 style="color:purple;"> Team Statistics</h1>
+      <p><strong>These are the statistics for Sporting Kansas City </strong></p>
+
+      <p> Team info: <b><%= @stat_tracker.team_info("5") %></b> </p>
+
+      <p> The season with best win percentage is <b><%= @stat_tracker.best_season("5") %></b> </p>
+
+      <p> The season with worst win percentage is <b><%= @stat_tracker.worst_season("5") %></b> </p>
+
+      <p> The average win percentage of all games for a team <b><%= @stat_tracker.average_win_percentage("5") %></b> </p>
+
+      <p> The team with the highest average score when at home is <b><%= @stat_tracker.most_goals_scored("5") %></b> </p>
+
+      <p> The team with the lowest average score per visitor is <b><%= @stat_tracker.fewest_goals_scored("5") %></b> </p>
+
+      <p> The team with the lowest average score per visitor is <b><%= @stat_tracker.favorite_opponent("5") %></b> </p>
+
+      <p> The team's rival is <b><%= @stat_tracker.rival("5") %></b> </p>
+
+    </body>
+  </html>
+}
+
+renderer = ERB.new(template)
+puts output = renderer.result()
