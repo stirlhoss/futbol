@@ -11,17 +11,47 @@ locations = {
   game_teams: game_teams_path
 }
 
-stat_tracker = StatTracker.from_csv(locations)
+@stat_tracker = StatTracker.from_csv(locations)
 
 template = %{
   <html>
     <head><title>Futbol Statistics </title></head>
     <body>
+      <h1 style="text-align:center; color:red"> Futbol <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ru2cCIvmdPjrfOFTT48BXlulPqTP3KYuQg&usqp=CAU" alt="Computer Man" style="width:48px;height:48px;"></h1>
 
-      <h1 style="color:blue;">Season Statistics</h1><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ru2cCIvmdPjrfOFTT48BXlulPqTP3KYuQg&usqp=CAU" alt="Computer Man" style="width:48px;height:48px;">
-      <p><strong>These are the statistics for the Futbol Seasons</strong></p>
+      <h1 style="color:green;"> Game Statistics</h1>
+      <p><strong>These are the statistics for all games</strong></p>
 
-      <p> Winningest Coach is <b><%= stat_tracker.winningest_coach %></b> </p>
+      <p> The highest total score is <b><%= @stat_tracker.highest_total_score %></b> </p>
+
+      <p> The lowest total score is <b><%= @stat_tracker.lowest_total_score %></b> </p>
+
+      <p> The percentage of games that a home team has won <b><%= @stat_tracker.percentage_home_wins %></b> </p>
+
+      <p> The percentage of games that a visitor team has won <b><%= @stat_tracker.percentage_visitor_wins %></b> </p>
+
+      <p> The percentage of games that were a tie <b><%= @stat_tracker.percentage_ties %></b> </p>
+
+      <p> The average goals across all seasons is <b><%= @stat_tracker.average_goals_per_game %></b> </p>
+
+      <p> The average goals per season are <b><%= @stat_tracker.average_goals_by_season %></b> </p>
+
+
+      <h1 style="color:blue;"> Season Statistics</h1>
+      <p><strong>These are the statistics for the 2013-2014 Season</strong></p>
+
+      <p> Winningest Coach is <b><%= @stat_tracker.winningest_coach("20132014") %></b> </p>
+
+      <p> Worst Coach is <b><%= @stat_tracker.worst_coach("20132014") %></b> </p>
+
+      <p> The most accurate team is <b><%= @stat_tracker.most_accurate_team("20132014") %></b> </p>
+
+      <p> The least accurate team is <b><%= @stat_tracker.least_accurate_team("20132014") %></b> </p>
+
+      <p> The team with the most tackles <b><%= @stat_tracker.most_tackles("20132014") %></b> </p>
+
+      <p> The team with the least tackles <b><%= @stat_tracker.fewest_tackles("20132014") %></b> </p>
+
 
     </body>
   </html>
